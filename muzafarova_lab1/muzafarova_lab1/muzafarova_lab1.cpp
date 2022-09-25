@@ -12,7 +12,7 @@ struct pipe {
 struct CS {
 	string name = "";
 	int shop = 0, workingShop = 0;
-	float effectiveness = 0;
+	int effectiveness = 0;
 	bool existence = 0;
 };
 
@@ -26,6 +26,14 @@ void check(T& input)
 	}
 }
 
+template <typename T>
+void checkEffectiveness(T& input) {
+	while ((cin >> input).fail() || input < 1 || input > 10) {
+		cout << "Error!\nInput value from 1 to 10!\n";
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+	}
+}
 void menu() {
 	cout << "\nChoose operation:" << endl
 		<< "1.Add pipe" << endl
@@ -68,7 +76,7 @@ void loadData(pipe& p, CS& cs) {
 	getline(fin, line);
 	cs.workingShop = stoi(line);
 	getline(fin, line);
-	cs.effectiveness = stod(line);
+	cs.effectiveness = stoi(line);
 	fin.close();
 }
 
@@ -121,7 +129,7 @@ void addCS(CS& cs) {
 	check(cs.workingShop);
 	numberWorkingShops(cs);
 	cout << "Enter CS efficiency (from 1 to 10)\n";
-	check(cs.effectiveness);
+	checkEffectiveness(cs.effectiveness);
 	cs.existence = true;
 }
 
