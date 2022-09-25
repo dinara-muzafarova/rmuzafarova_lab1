@@ -1,4 +1,6 @@
 ﻿#include <iostream>
+#include <fstream>
+#include <string>
 using namespace std;
 
 struct pipe {
@@ -24,10 +26,51 @@ void check(T& input)
 	}
 }
 
-//template <typename T>
-//void isExist(T& input) {
-	//if(existence)
-//}
+void menu() {
+	cout << "\nChoose operation:" << endl
+		<< "1.Add pipe" << endl
+		<< "2.Add CS" << endl
+		<< "3.View all objects" << endl
+		<< "4.Edit pipe" << endl
+		<< "5.Edit CS" << endl
+		<< "6.Save" << endl
+		<< "7.Download" << endl
+		<< "0.Exit" << endl;
+}
+
+void saveData(pipe& p,CS& cs) {
+	ofstream fout;
+	fout.open("data.txt", 'w');
+	fout << p.length << endl
+		<< p.diametr << endl
+		<< p.status << endl
+		<< cs.name << endl
+		<< cs.shop << endl
+		<< cs.workingShop << endl
+		<< cs.effectiveness << endl;
+	fout.close();
+}
+
+void loadData(pipe& p, CS& cs) {
+	ifstream fin;
+	string line;
+	fin.open("data.txt");
+	getline(fin, line);
+	p.length = stoi(line);
+	getline(fin, line);
+	p.diametr = stoi(line);
+	getline(fin, line);
+	p.status = stoi(line);
+	getline(fin, line);
+	cs.name = line;
+	getline(fin, line);
+	cs.shop = stoi(line);
+	getline(fin, line);
+	cs.workingShop = stoi(line);
+	getline(fin, line);
+	cs.effectiveness = stod(line);
+	fin.close();
+}
 
 void statusPipe(pipe& p) {
 	if (p.status == 0) {
@@ -102,7 +145,7 @@ void viewAll(pipe p, CS cs) {
 		cout << "Pipe:\n";
 		cout << "length: " << p.length;
 		cout << "\ndiametr: " << p.diametr;
-		cout << "\nstatus: " << p.status;
+		cout << "\nstatus: "; statusPipe(p);
 	}
 	else {
 		cout << "\nThe pipe does not exist!";
@@ -123,15 +166,15 @@ int main() {
 	pipe p;
 	CS cs;
 	while (true) {
-		cout << "\nChoose operation:\n1.Add pipe\n2.Add CS\n3.View all objects\n4.Edit pipe\n5.Edit CS\n6.Save\n7.Download\n0.Exit\n";
-		check(operation);
+		menu();
+		cin >> operation;
 		switch (operation) {
 			//добавление трубы
 		case 1: {
 			addPipe(p);
 			break;
 		}
-			//добавление КС
+			  //добавление КС
 		case 2: {
 			addCS(cs);
 			break;
@@ -147,6 +190,20 @@ int main() {
 		case 5: {
 			editCS(cs);
 			break;
+		}
+		case 6: {
+			saveData(p, cs);
+			break;
+		}
+		case 7: {
+			loadData(p, cs);
+			break;
+		}
+		case 0: {
+			return 0;
+		}
+		default: {
+			cout << "Error!\nInput correct value!\n";
 		}
 		}
 	}
