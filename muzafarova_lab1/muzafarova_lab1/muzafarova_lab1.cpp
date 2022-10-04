@@ -1,43 +1,63 @@
 ﻿#include <iostream>
 #include <fstream>
 #include <string>
-#include <Windows.h>
 using namespace std;
 
 //параметры трубы
 struct pipe {
 	float length = 0, diametr = 0;
-	bool status = 0;
+	int status = 0;
 	bool existence = 0;
 };
 
 //параметры КС
 struct CS {
 	string name = "";
-	int shop = 0, workingShop = 0;
-	int effectiveness = 0;
+	double shop = 0, workingShop = 0;
+	double effectiveness = 0;
 	bool existence = 0;
 };
 
-//проверка данных
-template <typename T>
-void check(T& input)
-{
-	while ((cin >> input).fail() || input < 0) {
-		cout << "Error!\nInput correct value!\n";
+//проверка целочисленных данных
+double checkCS(double x) {
+	while ((x / trunc(x) != 1) || (x < 0)) {
+		cout << "Error! Input correct value!" << endl;
 		cin.clear();
 		cin.ignore(INT_MAX, '\n');
+		cin >> x;
 	}
+	return x;
+}
+
+double checkPipe(double x) {
+	while (x <= 0) {
+		cout << "Error! Input correct value!" << endl;
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+		cin >> x;
+	}
+	return x;
+}
+
+int checkStatusOfPipe(int x) {
+	while ((x < 0) || (x > 1)) {
+		cout << "Error! Input correct value!" << endl;
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+		cin >> x;
+	}
+	return x;
 }
 
 //проверка эффективности КС
-template <typename T>
-void checkEffectiveness(T& input) {
-	while ((cin >> input).fail() || input < 1 || input > 10) {
+int checkEffectiveness(int x) {
+	while ( (x < 1) || (x > 10)) {
 		cout << "Error!\nInput value from 1 to 10!\n";
 		cin.clear();
 		cin.ignore(INT_MAX, '\n');
+		cin >> x;
 	}
+	return x;
 }
 
 //менюшка
@@ -70,26 +90,18 @@ void saveData(pipe& p,CS& cs) {
 
 //выгрузка файлов из блокнота
 void loadData(pipe& p, CS& cs) {
-	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);
 	ifstream fin;
 	string line;
 	fin.open("data.txt");
-	getline(fin, line);
-	p.length = stoi(line);
-	getline(fin, line);
-	p.diametr = stoi(line);
-	getline(fin, line);
-	p.status = stoi(line);
-	getline(fin, line);
+	fin >> p.length;
+	fin >> p.diametr;
+	fin >> p.status;
 	p.existence = 1;
+	getline(fin, line);
 	cs.name = line;
-	getline(fin, line);
-	cs.shop = stoi(line);
-	getline(fin, line);
-	cs.workingShop = stoi(line);
-	getline(fin, line);
-	cs.effectiveness = stoi(line);
+	fin >> cs.shop;
+	fin >> cs.workingShop;
+	fin >> cs.effectiveness;
 	cs.existence = 1;
 	fin.close();
 	cout << "The data is uploaded." << endl;
@@ -108,11 +120,14 @@ void statusPipe(pipe& p) {
 //добавление трубы
 void addPipe(pipe& p) {
 	cout << "Input lenght:\n";
-	check(p.length);
+	cin >> p.length;
+	checkPipe(p.length);
 	cout << "Input diametr:\n";
-	check(p.diametr);
+	cin >> p.diametr;
+	checkPipe(p.diametr);
 	cout << "Choose status of pipe:\n0.if repairing \n1.if works\n";
-	check(p.status);
+	cin >> p.status;
+	checkStatusOfPipe(p.status);
 	statusPipe(p);
 	p.existence = true;
 }
@@ -122,7 +137,8 @@ void editPipe(pipe& p) {
 	if (p.existence) {
 		statusPipe(p);
 		cout << "\nWrite a new status of pipe: \n0.if repairing \n1.if works" << endl;
-		check(p.status);
+		cin >> p.status;
+		checkStatusOfPipe(p.status);
 		statusPipe(p);
 	}
 	else {
@@ -145,11 +161,14 @@ void addCS(CS& cs) {
 	cout << "Enter the name of the CS:\n";
 	cin >> cs.name;
 	cout << "Input the number of shops:\n";
-	check(cs.shop);
+	cin >> cs.shop;
+	checkCS(cs.shop);
 	cout << "Input the number of working shops:\n";
-	check(cs.workingShop);
+	cin >> cs.workingShop;
+	checkCS(cs.workingShop);
 	numberWorkingShops(cs);
 	cout << "Enter CS efficiency (from 1 to 10)\n";
+	cin >> cs.effectiveness;
 	checkEffectiveness(cs.effectiveness);
 	cs.existence = true;
 }
@@ -162,7 +181,8 @@ void editCS(CS& cs) {
 		cout << "The number of working shops: ";
 		cout << cs.workingShop << endl;
 		cout << "\nWrite a new number of working shops:" << endl;
-		check(cs.workingShop);
+		cin >> cs.workingShop;
+		checkCS(cs.workingShop);
 		numberWorkingShops(cs);
 	}
 	else {
@@ -195,14 +215,13 @@ void viewAll(pipe p, CS cs) {
 
 //основная часть (бади)
 int main() {
-	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);
 	int operation = -1;
 	pipe p;
 	CS cs;
 	while (true) {
 		menu();
 		cin >> operation;
+		checkCS(operation);
 		switch (operation) {
 			//добавление трубы
 		case 1: {
