@@ -29,6 +29,7 @@ double checkCS(double x) {
 	return x;
 }
 
+//проверка параметров трубы
 double checkPipe(double x) {
 	while (x <= 0) {
 		cout << "Error! Input correct value!" << endl;
@@ -39,8 +40,9 @@ double checkPipe(double x) {
 	return x;
 }
 
+//проверка статуса трубы
 int checkStatusOfPipe(int x) {
-	while ((x < 0) || (x > 1)) {
+	while ((cin.fail())||(x < 0) || (x > 1)) {
 		cout << "Error! Input correct value!" << endl;
 		cin.clear();
 		cin.ignore(INT_MAX, '\n');
@@ -51,7 +53,7 @@ int checkStatusOfPipe(int x) {
 
 //проверка эффективности КС
 int checkEffectiveness(int x) {
-	while ( (x < 1) || (x > 10)) {
+	while ((cin.fail())|| (x < 1) || (x > 10)) {
 		cout << "Error!\nInput value from 1 to 10!\n";
 		cin.clear();
 		cin.ignore(INT_MAX, '\n');
