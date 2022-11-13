@@ -1,10 +1,13 @@
 ﻿#include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 using namespace std;
 
 //параметры трубы
-struct pipe {
+class pipe {
+public:
+	 int p_index;
 	float length = 0, diametr = 0;
 	int status = 0;
 };
@@ -118,6 +121,13 @@ void statusPipe(pipe& p) {
 	else {
 		cout << "Pipe works\n";
 	}
+}
+
+pipe& selectPipe(vector<pipe>& g) {
+	cout << "Enter index: ";
+	int index;
+	cin >> index;
+	return g[index - 1];
 }
 
 //добавление трубы
