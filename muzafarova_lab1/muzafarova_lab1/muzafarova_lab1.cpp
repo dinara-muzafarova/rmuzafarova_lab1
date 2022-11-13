@@ -82,15 +82,23 @@ void saveData(pipe& p,CS& cs) {
 	ofstream fout;
 	fout.open("data.txt", 'w');
 	if (p.length != 0) {
-		fout << p.length << endl
+		fout << "1" << endl
+			<< p.length << endl
 			<< p.diametr << endl
 			<< p.status << endl;
 	}
+	else {
+		fout << "0" << endl;
+	}
 	if (cs.shop != 0) {
-		fout << cs.name << endl
+		fout << "1" << endl
+			<< cs.name << endl
 			<< cs.shop << endl
 			<< cs.workingShop << endl
 			<< cs.effectiveness << endl;
+	}
+	else {
+		fout << "0" << endl;
 	}
 	fout.close();
 	cout << "The data is saved." << endl;
@@ -100,15 +108,21 @@ void saveData(pipe& p,CS& cs) {
 void loadData(pipe& p, CS& cs) {
 	ifstream fin;
 	string line;
+	int exist;
 	fin.open("data.txt");
-	fin >> p.length;
-	fin >> p.diametr;
-	fin >> p.status;
-	fin >> cs.name;
-	getline(fin, cs.name);
-	fin >> cs.shop;
-	fin >> cs.workingShop;
-	fin >> cs.effectiveness;
+	fin >> exist;
+	if (exist == 1) {
+		fin >> p.length;
+		fin >> p.diametr;
+		fin >> p.status;
+	}
+	fin >> exist;
+	if (exist == 1) {
+		getline(fin >> ws, cs.name);
+		fin >> cs.shop;
+		fin >> cs.workingShop;
+		fin >> cs.effectiveness;
+	}
 	fin.close();
 	cout << "The data is uploaded." << endl;
 }
@@ -166,8 +180,7 @@ void numberWorkingShops(int max,int& x) {
 //добавление КС
 void addCS(CS& cs) {
 	cout << "Enter the name of the CS:\n";
-	cin >> cs.name;
-	getline(cin, cs.name);
+	getline(cin>>ws, cs.name);
 	cout << "Input the number of shops:\n";
 	checkCS(cs.shop);
 	cout << "Input the number of working shops:\n";
