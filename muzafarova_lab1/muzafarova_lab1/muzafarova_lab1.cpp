@@ -2,22 +2,13 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include "pipe.h"
+#include "cs.h"
+
 using namespace std;
 
-//параметры трубы
-class pipe {
-public:
-	 int p_index;
-	float length = 0, diametr = 0;
-	int status = 0;
-};
 
-//параметры КС
-struct CS {
-	string name = "";
-	int shop = 0, workingShop = 0;
-	int effectiveness = 0;
-};
+
 
 //проверка целочисленных данных
 void checkCS(int& x) {
@@ -78,7 +69,7 @@ void menu() {
 }
 
 //сохранение файлов блокнот
-void saveData(pipe& p,CS& cs) {
+void saveData(pipe& p,cs& cs) {
 	ofstream fout;
 	fout.open("data.txt", 'w');
 	if (p.length != 0) {
@@ -105,7 +96,7 @@ void saveData(pipe& p,CS& cs) {
 }
 
 //выгрузка файлов из блокнота
-void loadData(pipe& p, CS& cs) {
+void loadData(pipe& p, cs& cs) {
 	ifstream fin;
 	string line;
 	int exist;
@@ -178,7 +169,7 @@ void numberWorkingShops(int max,int& x) {
 }
 
 //добавление КС
-void addCS(CS& cs) {
+void addCS(cs& cs) {
 	cout << "Enter the name of the CS:\n";
 	getline(cin>>ws, cs.name);
 	cout << "Input the number of shops:\n";
@@ -190,7 +181,7 @@ void addCS(CS& cs) {
 }
 
 //редактирование КС
-void editCS(CS& cs) {
+void editCS(cs& cs) {
 	if (cs.shop != 0) {
 		cout << "The number of shops: ";
 		cout << cs.shop << endl;
@@ -205,7 +196,7 @@ void editCS(CS& cs) {
 }
 
 //просмотр всех объектов
-void viewAll(pipe p, CS cs) {
+void viewAll(pipe p, cs cs) {
 	if (p.length != 0) {
 		cout << "Pipe:\n";
 		cout << "length: " << p.length;
@@ -231,7 +222,7 @@ void viewAll(pipe p, CS cs) {
 int main() {
 	int operation = -1;
 	pipe p;
-	CS cs;
+	cs cs;
 	while (true) {
 		menu();
 		checkMenu(operation);
