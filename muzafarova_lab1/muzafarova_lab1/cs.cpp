@@ -31,7 +31,7 @@ ostream& operator<<(ostream& out, cs& cs)
 	return out();
 }
 
-void cs::editCs(cs& cs)
+void cs::editCS(cs& cs)
 {
 	if (cs.shop != 0) {
 		cout << "The number of shops: ";
@@ -44,4 +44,18 @@ void cs::editCs(cs& cs)
 	else {
 		cout << "You do not have a CS!" << endl;
 	}
+}
+
+void cs::saveCS(ofstream& file)
+{
+	file << indexcs << endl << name << endl << shop << endl << workingShop << endl << effectiveness << endl;
+}
+
+void cs::loadCS(ifstream& file)
+{
+	file >> indexcs;
+	getline(file, name);
+	file >> shop;
+	file >> workingShop;
+	file >> effectiveness;
 }

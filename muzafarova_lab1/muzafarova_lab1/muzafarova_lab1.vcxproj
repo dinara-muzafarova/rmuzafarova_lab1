@@ -140,12 +140,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cs.cpp" />
+    <ClCompile Include="header.cpp" />
     <ClCompile Include="l.cpp" />
     <ClCompile Include="muzafarova_lab1.cpp" />
     <ClCompile Include="pipe.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cs.h" />
+    <ClInclude Include="header.h" />
     <ClInclude Include="l.h" />
     <ClInclude Include="pipe.h" />
   </ItemGroup>

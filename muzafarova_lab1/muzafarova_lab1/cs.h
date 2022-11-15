@@ -14,11 +14,14 @@ public:
     {
         indexcs = max_indexcs++;
     }
-    friend istream& operator>> (istream& in, cs& p);
+    friend istream& operator>> (istream& in, cs& cs);
     friend ostream& operator<< (ostream& out, cs& cs);
-    void editCs();
-    void saveCs(ofstream& file);
-    void loadCs(ifstream& file);
+    void editCS(cs& cs);
+    void checkCS();
+    void numberWorkingShops();
+    void checkEffectiveness();
+    void saveCS(ofstream& file);
+    void loadCS(ifstream& file);
     int getIdCs() { return indexcs; }
     double get_unused() { return (((double)shop - (double)workingShop) / (double)shop) * 100; }
     string name = "";
