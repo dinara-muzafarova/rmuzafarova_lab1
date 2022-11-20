@@ -15,8 +15,7 @@ public:
     }
     friend istream& operator >> (istream& in, pipe& p);
     friend ostream& operator << (ostream& out, pipe& p);
-    void editPipe();
-    void statusPipe();
+    void editPipe(pipe&p);
     int getIdP() { return indexp; }
     void savePipe(ofstream& file);
     void loadPipe(ifstream& file);

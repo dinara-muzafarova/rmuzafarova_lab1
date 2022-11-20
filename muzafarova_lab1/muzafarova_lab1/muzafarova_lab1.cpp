@@ -2,12 +2,14 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <float.h>
 #include "pipe.h"
 #include "cs.h"
+#include <unordered_map>
+#include <unordered_set>
+#include "header.h"
 
 using namespace std;
-
-
 
 
 //проверка целочисленных данных
