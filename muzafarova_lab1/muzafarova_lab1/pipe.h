@@ -16,7 +16,7 @@ public:
     friend istream& operator >> (istream& in, pipe& p);
     friend ostream& operator << (ostream& out, pipe& p);
     void editPipe(pipe&p);
-    int getIdP() { return indexp; }
+    int getIdPipe() { return indexp; }
     void savePipe(ofstream& file);
     void loadPipe(ifstream& file);
     float length = 0, diametr = 0;

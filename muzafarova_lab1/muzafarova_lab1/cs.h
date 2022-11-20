@@ -6,17 +6,17 @@
 
 using namespace std;
 
-class cs
+class CS
 {
 public:
     static int max_indexcs;
-    cs()
+    CS()
     {
         indexcs = max_indexcs++;
     }
-    friend istream& operator>> (istream& in, cs& cs);
-    friend ostream& operator<< (ostream& out, cs& cs);
-    void editCS(cs& cs);
+    friend istream& operator>> (istream& in, CS& cs);
+    friend ostream& operator<< (ostream& out, CS& cs);
+    void editCS(CS& cs);
     void checkCS();
     void numberWorkingShops();
     void checkEffectiveness();

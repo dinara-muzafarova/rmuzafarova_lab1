@@ -10,9 +10,9 @@
 
 using namespace std;
 
-int cs::max_indexcs = 0;
+int CS::max_indexcs = 0;
 
-istream& operator>>(istream& in, cs& cs)
+istream& operator>>(istream& in, CS& cs)
 {
 	cout << "Enter the index of the CS: " << cs.indexcs;
 	cout << "Enter the name of the CS:\n";
@@ -28,7 +28,7 @@ istream& operator>>(istream& in, cs& cs)
 	return in();
 }
 
-ostream& operator<<(ostream& out, cs& cs)
+ostream& operator<<(ostream& out, CS& cs)
 {
     out << "Index of CS: " << cs.indexcs << "CS info:\nName: " << cs.name << "\nNumber of workshops: " << cs.shop
 		<< "\nNumber of working workshops: " << cs.workingShop << "\nEffectiveness: "
@@ -36,7 +36,7 @@ ostream& operator<<(ostream& out, cs& cs)
 	return out();
 }
 
-void cs::editCS(cs& cs)
+void CS::editCS(CS& cs)
 {
 	if (cs.shop != 0) {
 		cout << "The number of shops: ";
@@ -51,12 +51,12 @@ void cs::editCS(cs& cs)
 	}
 }
 
-void cs::saveCS(ofstream& file)
+void CS::saveCS(ofstream& file)
 {
 	file << indexcs << endl << name << endl << shop << endl << workingShop << endl << effectiveness << endl;
 }
 
-void cs::loadCS(ifstream& file)
+void CS::loadCS(ifstream& file)
 {
 	file >> indexcs;
 	getline(file, name);

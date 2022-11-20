@@ -26,7 +26,7 @@ template <typename T>
 using filter_pipe = bool (*) (pipe& p, T par);
 
 template <typename T>
-using filter_cs = bool (*) (cs& cs, T par);
+using filter_cs = bool (*) (CS& cs, T par);
 
 template <typename T>
 vector <int> parametr_p(unordered_map <int, pipe>& pipe_group, filter_pipe<T> f, T par)
@@ -40,7 +40,7 @@ vector <int> parametr_p(unordered_map <int, pipe>& pipe_group, filter_pipe<T> f,
 }
 
 template <typename T>
-vector <int> parametr_cs(unordered_map <int, cs>& cs_group, filter_cs<T> f, T par)
+vector <int> parametr_cs(unordered_map <int, CS>& cs_group, filter_cs<T> f, T par)
 {
 	vector <int> id;
 	for (auto& cs : cs_group) 
