@@ -46,13 +46,13 @@ ostream& operator<<(ostream& out, pipe& p)
 	return out;
 }
 
-void pipe::editPipe(pipe& p)
+void pipe::editPipe()
 {
-	if (p.length != 0) {
-		statusPipe(p.status);
+	if (length != 0) {
+		statusPipe(status);
 		cout << "\nWrite a new status of pipe: \n0.if repairing \n1.if works" << endl;
-		p.status=correctNumber(1,2);
-		statusPipe(p.status);
+		status=correctNumber(1,2);
+		statusPipe(status);
 	}
 	else {
 		cout << "You do not have a pipe!" << endl;
