@@ -10,41 +10,41 @@
 
 using namespace std;
 
-int CS::max_indexcs = 0;
+int CS::max_indexcs = 1;
 
 istream& operator>>(istream& in, CS& cs)
 {
-	cout << "Enter the index of the CS: " << cs.indexcs;
-	cout << "Enter the name of the CS:\n";
+	cout << "Index of the CS: " << cs.indexcs << endl;
+	cout << "Enter the name of the CS: ";
 	cin.clear();
 	cin.ignore(INT_MAX, '\n');
 	getline(in, cs.name);
-	cout << "Input the number of shops:\n";
+	cout << "Input the number of shops: ";
 	cs.shop = correctNumber(0, INT_MAX);
-	cout << "Input the number of working shops:\n";
+	cout << "Input the number of working shops: ";
 	cs.workingShop = correctNumber(0, cs.shop);
-	cout << "Enter CS efficiency (from 1 to 10)\n";
+	cout << "Enter CS efficiency (from 1 to 10): ";
 	cs.effectiveness = correctNumber(0, 10);
-	return in();
+	return in;
 }
 
 ostream& operator<<(ostream& out, CS& cs)
 {
-    out << "Index of CS: " << cs.indexcs << "CS info:\nName: " << cs.name << "\nNumber of workshops: " << cs.shop
+    out << "Index of CS: " << cs.indexcs << "\nCS info:\nName: " << cs.name << "\nNumber of workshops: " << cs.shop
 		<< "\nNumber of working workshops: " << cs.workingShop << "\nEffectiveness: "
 		<< cs.effectiveness << endl;
-	return out();
+	return out;
 }
 
-void CS::editCS(CS& cs)
+void CS::editCS()
 {
-	if (cs.shop != 0) {
+	if (shop != 0) {
 		cout << "The number of shops: ";
-		cout << cs.shop << endl;
+		cout << shop << endl;
 		cout << "The number of working shops: ";
-		cout << cs.workingShop << endl;
+		cout << workingShop << endl;
 		cout << "\nWrite a new number of working shops:" << endl;
-		cs.workingShop = correctNumber(0, cs.shop);
+		workingShop = correctNumber(0, shop);
 	}
 	else {
 		cout << "You do not have a CS!" << endl;
@@ -64,3 +64,5 @@ void CS::loadCS(ifstream& file)
 	file >> workingShop;
 	file >> effectiveness;
 }
+
+

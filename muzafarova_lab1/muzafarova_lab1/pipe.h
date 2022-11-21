@@ -21,6 +21,6 @@ public:
     void loadPipe(ifstream& file);
     float length = 0, diametr = 0;
     int status = 0;
-    int indexp = 0;
+    int indexp = 1;
 };
 

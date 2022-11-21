@@ -9,7 +9,7 @@
 #include "header.h"
 using namespace std;
 
-int pipe::max_indexp = 0;
+int pipe::max_indexp = 1;
 
 string statusPipe(bool x)
 {
@@ -24,19 +24,19 @@ string statusPipe(bool x)
 
 istream& operator>>(istream& in, pipe& p)
 {
-	cout << "Enter the index of the pipe: " << p.indexp;
-	cout << "Input name:\n";
+	cout << "Index of the pipe: " << p.indexp << endl;
+	cout << "Input name: ";
 	cin.clear();
 	cin.ignore(INT_MAX, '\n');
 	getline(cin, p.name);
-	cout << "Input lenght:\n";
+	cout << "Input lenght: ";
 	p.length = correctNumber(0.0, DBL_MAX);
-	cout << "Input diametr:\n";
+	cout << "Input diametr: ";
 	p.diametr = correctNumber(0.0, DBL_MAX);
 	cout << "Choose status of pipe:\n0.if repairing \n1.if works\n";
 	p.status = correctNumber(0,1);
 	cout << statusPipe(p.status) << endl;
-	return in();
+	return in;
 }
 
 ostream& operator<<(ostream& out, pipe& p)

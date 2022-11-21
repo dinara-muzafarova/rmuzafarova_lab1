@@ -18,7 +18,7 @@ T correctNumber(T min, T max) {
 	while ((cin >> x).fail() || (x < min) || (x > max)) {
 		cin.clear();
 		cin.ignore(INT_MAX, '\n');
-		cout << "Type number (" << min << "-" << max << "):";
+		cout << "Error!!! Input correct value!" << endl;
 	}
 	return x;
 }
@@ -34,7 +34,7 @@ vector <int> parametr_p(unordered_map <int, pipe>& pipe_group, filter_pipe<T> f,
 	vector <int> id;
 	for (auto& pipe : pipe_group) {
 		if (f(pipe.second, par))
-			id.push_back(pipe.second.getIdP);
+			id.push_back(pipe.second.getIdPipe());
 	}
 	return id;
 }
@@ -43,10 +43,10 @@ template <typename T>
 vector <int> parametr_cs(unordered_map <int, CS>& cs_group, filter_cs<T> f, T par)
 {
 	vector <int> id;
-	for (auto& cs : cs_group) 
+	for (auto& CS : cs_group) 
 	{
-		if (f(cs.second, par))
-			id.push_back(cs.second.getIdP);
+		if (f(CS.second, par))
+			id.push_back(CS.second.getIdCs());
 	}
 	return id;
 }

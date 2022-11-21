@@ -16,10 +16,10 @@ public:
     }
     friend istream& operator>> (istream& in, CS& cs);
     friend ostream& operator<< (ostream& out, CS& cs);
-    void editCS(CS& cs);
-    void checkCS();
-    void numberWorkingShops();
-    void checkEffectiveness();
+    void editCS();
+    //void checkCS();
+    //void numberWorkingShops(int max, int& x);
+    //void checkEffectiveness();
     void saveCS(ofstream& file);
     void loadCS(ifstream& file);
     int getIdCs() { return indexcs; }
@@ -28,6 +28,6 @@ public:
 
     int shop = 0, workingShop = 0;
     int effectiveness = 0;
-    int indexcs = 0;
+    int indexcs = 1;
 };
 
