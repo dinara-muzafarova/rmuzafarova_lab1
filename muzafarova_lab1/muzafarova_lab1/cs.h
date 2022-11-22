@@ -22,7 +22,7 @@ public:
     //void checkEffectiveness();
     void saveCS(ofstream& file);
     void loadCS(ifstream& file);
-    int getIdCs() { return indexcs; }
+    int IdCs() { return indexcs; }
     double get_unused() { return (((double)shop - (double)workingShop) / (double)shop) * 100; }
     string name = "";
 private:

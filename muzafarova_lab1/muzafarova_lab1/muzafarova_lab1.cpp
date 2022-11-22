@@ -105,13 +105,13 @@ vector<int>searchCS(unordered_map<int, CS>& cs_group) {
 void addPipe(unordered_map<int, pipe>& pipe_group) {
 	pipe p;
 	cin >> p;
-	pipe_group.insert({ p.getIdPipe(),p });
+	pipe_group.insert({ p.IdPipe(),p });
 }
 //добавление КС
 void addCS(unordered_map<int, CS>& cs_group) {
 	CS cs;
 	cin >> cs;
-	cs_group.insert({ cs.getIdCs(),cs });
+	cs_group.insert({ cs.IdCs(),cs });
 }
 //редактирование трубы
 void editPipes(unordered_map<int,pipe>& pipe_group) {
@@ -419,16 +419,16 @@ void loadData(unordered_map<int, pipe>& pipe_group, unordered_map<int, CS>& cs_g
 		fin >> numberp >> numbercs;
 		for (int i = 0; i < numberp; i++) {
 			newp.loadPipe(fin);
-			pipe_group.insert({ newp.getIdPipe(),newp });
-			if (pipe::max_indexp <= newp.getIdPipe()) {
-				pipe::max_indexp = newp.getIdPipe() + 1;
+			pipe_group.insert({ newp.IdPipe(),newp });
+			if (pipe::max_indexp <= newp.IdPipe()) {
+				pipe::max_indexp = newp.IdPipe() + 1;
 			}
 		}
 		for (int i = 0; i < numbercs; i++) {
 			newcs.loadCS(fin);
-			cs_group.insert({ newcs.getIdCs(),newcs });
-			if (CS::max_indexcs <= newcs.getIdCs()) {
-				CS::max_indexcs = newcs.getIdCs() + 1;
+			cs_group.insert({ newcs.IdCs(),newcs });
+			if (CS::max_indexcs <= newcs.IdCs()) {
+				CS::max_indexcs = newcs.IdCs() + 1;
 			}
 		}
 		cout << "Your data is loaded!" << endl;
