@@ -25,9 +25,9 @@ public:
     int getIdCs() { return indexcs; }
     double get_unused() { return (((double)shop - (double)workingShop) / (double)shop) * 100; }
     string name = "";
-
+private:
     int shop = 0, workingShop = 0;
-    int effectiveness = 0;
+    double effectiveness = 0;
     int indexcs = 1;
 };
 

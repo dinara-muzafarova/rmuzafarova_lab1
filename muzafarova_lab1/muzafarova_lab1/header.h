@@ -14,10 +14,10 @@ using namespace std;
 
 template <typename T>
 T correctNumber(T min, T max) {
-	int x;
-	while ((cin >> x).fail() || (x < min) || (x > max)) {
+	T x;
+	while ((cin >> x).fail() || (x < min) || (x > max) || (cin.peek() != '\n')) {
 		cin.clear();
-		cin.ignore(INT_MAX, '\n');
+		cin.ignore(INT_MAX,'\n');
 		cout << "Error!!! Input correct value!" << endl;
 	}
 	return x;

@@ -49,10 +49,11 @@ ostream& operator<<(ostream& out, pipe& p)
 void pipe::editPipe()
 {
 	if (length != 0) {
-		statusPipe(status);
+		cout << "ID of pipe: " << indexp << endl;
+		//statusPipe(status);
 		cout << "\nWrite a new status of pipe: \n0.if repairing \n1.if works" << endl;
-		status=correctNumber(1,2);
-		statusPipe(status);
+		status=correctNumber(0,1);
+		//statusPipe(p.status);
 	}
 	else {
 		cout << "You do not have a pipe!" << endl;
@@ -60,17 +61,17 @@ void pipe::editPipe()
 }
 
 
-void pipe::savePipe(ofstream& file)
+void pipe::savePipe(ofstream& fout)
 {
-	file << indexp << endl << name << endl << endl << length << endl << diametr << endl << status << endl;
+	fout << indexp << endl << name << endl << length << endl << diametr << endl << status << endl;
 }
 
-void pipe::loadPipe(ifstream& file)
+void pipe::loadPipe(ifstream& fin)
 {
-	file >> indexp;
-	getline(file, name);
-	getline(file, name);
-	file >> length;
-	file >> diametr;
-	file >> status;
+	fin >> indexp;
+	getline(fin, name);
+	getline(fin, name);
+	fin >> length;
+	fin >> diametr;
+	fin >> status;
 }

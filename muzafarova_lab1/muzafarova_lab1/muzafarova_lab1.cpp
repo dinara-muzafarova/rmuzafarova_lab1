@@ -9,6 +9,7 @@
 #include <unordered_set>
 #include "header.h"
 
+
 using namespace std;
 
 unordered_map<int, pipe> pipe_group;
@@ -40,7 +41,7 @@ bool checkCSName(CS& cs, string name) {
 bool checkUnworking(CS& cs, double p) {
 	return(cs.get_unused() >= p);
 }
-
+//просмотр всех объектов
 void viewAll(unordered_map<int, pipe>&pipe_group, unordered_map<int, CS>& cs_group) {
 	if (pipe_group.size() != 0) {
 		for (auto& pipe : pipe_group) {
@@ -59,7 +60,13 @@ void viewAll(unordered_map<int, pipe>&pipe_group, unordered_map<int, CS>& cs_gro
 		cout << "You don't have CSs!" << endl;
 	}
 }
-
+pipe& selectPipe(unordered_map<int, pipe>& pipe_group) {
+	vector <pipe> pipe_group;
+	cout << "Enter index: ";
+	unsigned int index = correctNumber(1u, pipe_group.size());
+	return pipe_group[index-1];
+}
+//поиск трубы
 vector <int> searchPipe(unordered_map<int, pipe>pipe_group) {
 	vector<int> idp;
 	int x;
@@ -81,7 +88,7 @@ vector <int> searchPipe(unordered_map<int, pipe>pipe_group) {
 	}
 	return idp;
 }
-
+//поиск КСки
 vector<int>searchCS(unordered_map<int, CS>& cs_group) {
 	int x;
 	vector <int> idcs;
@@ -103,33 +110,34 @@ vector<int>searchCS(unordered_map<int, CS>& cs_group) {
 	}
 	return idcs;
 }
-
-void addPipe() {
+//добавление трубы
+void addPipe(unordered_map<int, pipe>& pipe_group) {
 	idpipe.insert(pipe::max_indexp);
 	pipe p;
 	cin >> p;
 	pipe_group.insert({ p.getIdPipe(),p });
 }
-
-void addCS() {
+//добавление КС
+void addCS(unordered_map<int, CS>& cs_group) {
 	idcs.insert(pipe::max_indexp);
 	CS cs;
 	cin >> cs;
 	cs_group.insert({ cs.getIdCs(),cs });
 }
-
+//редактирование трубы
 void editPipes(unordered_map<int,pipe>& pipe_group) {
 	int edit;
 	int id;
 	int x;
 	if (pipe_group.size() != 0) {
-		cout << "1.Choose 1 pipe \n2.Choose pipes \n3.Delete pipe" << endl;
+		cout << "1.Edit one pipe \n2.Edit pipes \n3.Delete pipe" << endl;
 		edit = correctNumber(1, 3);
 		if (edit == 1) {
-			cout << "Choose pipe to edit: " << endl;
+			cout << "Your pipes: " << endl;
 			for (auto& pipe : pipe_group) {
 				cout << pipe.second << endl;
 			}
+			cout << "Choose id of pipe to edit: " << endl;
 			id = correctNumber(0, (int)pipe_group.size());
 			if (pipe_group.find(id) != pipe_group.end()) {
 				pipe_group[id].editPipe();
@@ -159,6 +167,7 @@ void editPipes(unordered_map<int,pipe>& pipe_group) {
 				int n;
 				int id;
 				unordered_set <int> ids;
+				cout << "Your pipes: " << endl;
 				for (auto& pipe : pipe_group) {
 					cout << pipe.second << endl;
 				}
@@ -174,10 +183,8 @@ void editPipes(unordered_map<int,pipe>& pipe_group) {
 						cout << "You don't have such pipe!" << endl;
 					}
 				}
-				cout << "Enter a new status of pipe: " << endl;
-				n = correctNumber(0, 1);
 				for (auto& i : ids)
-					pipe_group[i].status = n;
+					pipe_group[i].editPipe();
 			}
 		}
 		if (edit == 3) {
@@ -186,6 +193,7 @@ void editPipes(unordered_map<int,pipe>& pipe_group) {
 			cout << "You want to delete:\n1.one pipe \n2. more than one pipe" << endl;
 			k = correctNumber(1, 2);
 			if (k == 1) {
+				cout << "Your pipes: " << endl;
 				for (auto& pipe : pipe_group) {
 					cout << pipe.second << endl;
 				}
@@ -213,6 +221,7 @@ void editPipes(unordered_map<int,pipe>& pipe_group) {
 					}
 				}
 				else {
+					cout << "Your pipes: " << endl;
 					for (auto& pipe : pipe_group) {
 						cout << pipe.second << endl;
 					}
@@ -239,16 +248,17 @@ void editPipes(unordered_map<int,pipe>& pipe_group) {
 	cout << "You don't have pipe to edit!" << endl;
 }
 }
-
+//редактирование КСки
 void editCSs(unordered_map<int, CS>& cs_group) {
 	vector <int> ids;
 	int edit;
 	int id;
 	int x;
 	if (cs_group.size() != 0) {
-		cout << "1.Choose 1 CS \n2.Choose CS(>1) \n3.Delete CS" << endl;
+		cout << "1.Edit one CS \n2.Edit more CS \n3.Delete CS" << endl;
 		edit = correctNumber(1, 3);
 		if (edit == 1) {
+			cout << "Your CS: " << endl;
 			for (auto& CS : cs_group) {
 				cout << CS.second << endl;
 			}
@@ -269,8 +279,6 @@ void editCSs(unordered_map<int, CS>& cs_group) {
 			if (x == 1) {
 				auto idp = searchCS(cs_group);
 				if (idp.size() != 0) {
-					cout << "Enter a new status of pipe: " << endl;
-					n = correctNumber(0, 1);
 					for (auto& i : idp)
 						cs_group[i].editCS();
 				}
@@ -281,6 +289,7 @@ void editCSs(unordered_map<int, CS>& cs_group) {
 			if (x == 2) {
 				int n;
 				int y;
+				cout << "Your CS: " << endl;
 				for (auto& CS : cs_group) {
 					cout << CS.second << endl;
 				}
@@ -306,6 +315,7 @@ void editCSs(unordered_map<int, CS>& cs_group) {
 			cout << "You want to delete:\n1.one CS \n2. more than one CS: " << endl;
 			k = correctNumber(1, 2);
 			if (k == 1) {
+				cout << "Your CS: " << endl;
 				for (auto& CS : cs_group) {
 					cout << CS.second << endl;
 				}
@@ -333,6 +343,7 @@ void editCSs(unordered_map<int, CS>& cs_group) {
 					}
 				}
 				else {
+					cout << "Your CS: " << endl;
 					for (auto& CS : cs_group) {
 						cout << CS.second << endl;
 					}
@@ -375,28 +386,80 @@ void menu() {
 		<< " 9.Search CS" << endl
 		<< " 0.Exit" << endl;
 }
+//загрузка в файл
+void saveData(unordered_map<int, pipe>& pipe_group, unordered_map<int, CS>& cs_group) {
+	string data;
+	cout << "Enter the name of file: ";
+	cin >> data;
+	ofstream fout;
+	fout.open(data + ".txt", ios::out);
+	if (!fout) {
+		cout << "ERROR! no no no" << endl;
+	}
+	else {
+		fout << pipe_group.size() << " " << cs_group.size() << endl;
+		for (auto pipe : pipe_group)
+			pipe.second.savePipe(fout);
+		for (auto CS : cs_group)
+			CS.second.saveCS(fout);
+		cout << "Your data is saved!" << endl;
+	}
+}
+//выгрузка из файла
+void loadData(unordered_map<int, pipe>& pipe_group, unordered_map<int, CS>& cs_group) {
+	string data;
+	int numberp, numbercs;
+	pipe newp;
+	CS newcs;
+	cout << "Enter the name of file: ";
+	cin >> data;
+	ifstream fin;
+	fin.open(data + ".txt",ios::out);
+	if (!fin) {
+		cout << "ERROR! no no no" << endl;
+	}
+	else {
+		pipe::max_indexp = 1;
+		CS::max_indexcs = 1;
+		pipe_group.clear();
+		cs_group.clear();
+		fin >> numberp >> numbercs;
+		for (int i = 0; i < numberp; i++) {
+			newp.loadPipe(fin);
+			pipe_group.insert({ newp.getIdPipe(),newp });
+			if (pipe::max_indexp <= newp.getIdPipe()) {
+				pipe::max_indexp = newp.getIdPipe() + 1;
+			}
+		}
+		for (int i = 0; i < numbercs; i++) {
+			newcs.loadCS(fin);
+			cs_group.insert({ newcs.getIdCs(),newcs });
+			if (CS::max_indexcs <= newcs.getIdCs()) {
+				CS::max_indexcs = newcs.getIdCs() + 1;
+			}
+		}
+		cout << "Your data is loaded!" << endl;
+	}
+}
 
 //основная часть (бади)
 int main() {
 	int operation = -1;
 	unordered_map<int, pipe> pipe_group;
 	unordered_map<int, CS> cs_group;
+
 	while (true) {
 		menu();
 		operation = correctNumber(0,9);
 		switch (operation) {
 		//добавление трубы
 		case 1: {
-			pipe p;
-			cin >> p;
-			pipe_group.insert({ p.getIdPipe(),p });
+			addPipe(pipe_group);
 			break;
 		}
 		//добавление КС
 		case 2: {
-			CS cs;
-			cin >> cs;
-			cs_group.insert({ cs.getIdCs(),cs });
+			addCS(cs_group);
 			break;
 		}
 		//просмотр всех объектов
@@ -416,75 +479,33 @@ int main() {
 		}
 		// сохранение данных в блокнот
 		case 6: {
-			string x;
-			cout << "Enter the name of file " << endl;
-			cin >> x;
-			ofstream file;
-			//file.open();
-			if (!file) {
-				cout << "ERROR!" << endl;
-			}
-			else {
-				file << pipe_group.size() << " " << cs_group.size() << endl;
-				for (auto pipe : pipe_group)
-					pipe.second.savePipe(file);
-				for (auto CS : cs_group)
-					CS.second.saveCS(file);
-			}
+			saveData(pipe_group, cs_group);
 			break;
 		}
 		// выгрузка данных из блокнота
 		case 7: {
-			string x;
-			int l1, l2;
-			pipe newp;
-			CS newcs;
-			cout << "Enter the name of file: ";
-			cin >> x;
-			ifstream file;
-			//file.open();
-			if (!file) {
-				cout << "ERROR!" << endl;
-			}
-			else {
-				pipe::max_indexp = 0;
-				CS::max_indexcs = 0;
-				pipe_group.clear();
-				cs_group.clear();
-				file >> l1 >> l2;
-				for (int i = 0; i < l1; i++) {
-					newp.loadPipe(file);
-					pipe_group.insert({ newp.getIdPipe(),newp });
-					if (pipe::max_indexp <= newp.getIdPipe()) {
-						pipe::max_indexp = newp.getIdPipe() + 1;
-					}
-				}
-				for (int i = 0; i < l2; i++) {
-					newcs.loadCS(file);
-					cs_group.insert({ newcs.getIdCs(),newcs });
-					if (CS::max_indexcs <= newcs.getIdCs()) {
-						CS::max_indexcs = newcs.getIdCs() + 1;
-					}
-				}
-			}
+			loadData(pipe_group, cs_group);
 			break;
 		}
+		// поиск трубы
 		case 8: {
-			if (pipe_group.size() != 0) {
-				auto p = searchPipe(pipe_group);
-				if (p.size() != 0) {
-					for (auto& i : p)
-						cout << pipe_group[i] << endl;
-				}
-				else {
-					cout << "You don't have such pipe!" << endl;
-				}
-			}
-			else {
-				cout << "You don't have a pipe!" << endl;
-			}
+			//if (pipe_group.size() != 0) {
+				//auto p = searchPipe(pipe_group);
+				//if (p.size() != 0) {
+					//for (auto& i : p)
+						//cout << pipe_group[i] << endl;
+				//}
+				//else {
+					//cout << "You don't have such pipe!" << endl;
+				//}
+			//}
+			//else {
+				//cout << "You don't have a pipe!" << endl;
+			//}
+			selectPipe(pipe_group);
 			break;
 		}
+		// поиск КСки
 		case 9: {
 			if (cs_group.size() != 0) {
 				auto c = searchCS(cs_group);
@@ -512,3 +533,5 @@ int main() {
 		}
 	}
 }
+
+

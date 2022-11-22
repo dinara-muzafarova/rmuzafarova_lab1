@@ -23,7 +23,7 @@ istream& operator>>(istream& in, CS& cs)
 	cs.shop = correctNumber(0, INT_MAX);
 	cout << "Input the number of working shops: ";
 	cs.workingShop = correctNumber(0, cs.shop);
-	cout << "Enter CS efficiency (from 1 to 10): ";
+	cout << "Enter CS efficiency (from 0 to 10): ";
 	cs.effectiveness = correctNumber(0, 10);
 	return in;
 }
@@ -39,6 +39,7 @@ ostream& operator<<(ostream& out, CS& cs)
 void CS::editCS()
 {
 	if (shop != 0) {
+		cout << "ID of CS: " << indexcs << endl;
 		cout << "The number of shops: ";
 		cout << shop << endl;
 		cout << "The number of working shops: ";
@@ -51,18 +52,19 @@ void CS::editCS()
 	}
 }
 
-void CS::saveCS(ofstream& file)
+void CS::saveCS(ofstream& fout)
 {
-	file << indexcs << endl << name << endl << shop << endl << workingShop << endl << effectiveness << endl;
+	fout << indexcs << endl << name << endl << shop << endl << workingShop << endl << effectiveness << endl;
 }
 
-void CS::loadCS(ifstream& file)
+void CS::loadCS(ifstream& fin)
 {
-	file >> indexcs;
-	getline(file, name);
-	file >> shop;
-	file >> workingShop;
-	file >> effectiveness;
+	fin >> indexcs;
+	getline(fin, name);
+	getline(fin, name);
+	fin >> shop;
+	fin >> workingShop;
+	fin >> effectiveness;
 }
 
 
