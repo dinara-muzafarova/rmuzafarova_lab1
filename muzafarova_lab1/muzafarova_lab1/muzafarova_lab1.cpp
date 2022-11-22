@@ -9,13 +9,7 @@
 #include <unordered_set>
 #include "header.h"
 
-
 using namespace std;
-
-unordered_map<int, pipe> pipe_group;
-unordered_map<int, CS> cs_group;
-unordered_set<int> idpipe;
-unordered_set <int> idcs;
 
 ostream& operator<<(ostream& out, unordered_set <int>& par) {
 	out << "Exiting id: ";
@@ -26,21 +20,23 @@ ostream& operator<<(ostream& out, unordered_set <int>& par) {
 	return out;
 }
 
-bool checkPipeName(pipe& p, string name) {
+//проверки для поиска
+bool testPipeName(pipe& p, string name) {
 	return (p.name.find(name) != string::npos);
 }
 
-bool checkPipeStatus(pipe& p, bool status) {
+bool testPipeStatus(pipe& p, bool status) {
 	return (p.status == status);
 }
 
-bool checkCSName(CS& cs, string name) {
+bool testCSName(CS& cs, string name) {
 	return(cs.name.find(name) != string::npos);
 }
 
-bool checkUnworking(CS& cs, double p) {
-	return(cs.get_unused() >= p);
+bool testUnworking(CS& cs, double p) {
+	return(cs.get_unused() == p);
 }
+
 //просмотр всех объектов
 void viewAll(unordered_map<int, pipe>&pipe_group, unordered_map<int, CS>& cs_group) {
 	if (pipe_group.size() != 0) {
@@ -60,12 +56,7 @@ void viewAll(unordered_map<int, pipe>&pipe_group, unordered_map<int, CS>& cs_gro
 		cout << "You don't have CSs!" << endl;
 	}
 }
-pipe& selectPipe(unordered_map<int, pipe>& pipe_group) {
-	vector <pipe> pipe_group;
-	cout << "Enter index: ";
-	unsigned int index = correctNumber(1u, pipe_group.size());
-	return pipe_group[index-1];
-}
+
 //поиск трубы
 vector <int> searchPipe(unordered_map<int, pipe>pipe_group) {
 	vector<int> idp;
@@ -74,17 +65,17 @@ vector <int> searchPipe(unordered_map<int, pipe>pipe_group) {
 	x = correctNumber(1, 2);
 	if (x == 1) {
 		string name;
-		cout << "Enter the name of pipe: " << endl;
+		cout << "Enter the name of pipe: ";
 		cin.clear();
 		cin.ignore(INT_MAX, '\n');
 		getline(cin, name);
-		idp = parametr_p(pipe_group, checkPipeName, name);
+		idp = findPipeByParametr(pipe_group, testPipeName, name);
 	}
 	else {
 		bool n;
-		cout << "Enter the status of pipe(0 or 1): " << endl;
+		cout << "Enter the status of pipe(0 or 1): ";
 		n = correctNumber(0, 1);
-		idp = parametr_p(pipe_group, checkPipeStatus, n);
+		idp = findPipeByParametr(pipe_group, testPipeStatus, n);
 	}
 	return idp;
 }
@@ -96,30 +87,28 @@ vector<int>searchCS(unordered_map<int, CS>& cs_group) {
 	x = correctNumber(1, 2);
 	if (x == 1) {
 		string name;
-		cout << "Enter the name of CS: " << endl;
+		cout << "Enter the name of CS: ";
 		cin.clear();
 		cin.ignore(INT_MAX, '\n');
 		getline(cin, name);
-		idcs = parametr_cs(cs_group, checkCSName, name);
+		idcs = findCSByParametr(cs_group, testCSName, name);
 	}
 	else {
 		double n;
-		cout << "Enter the % of unused shops: " << endl;
+		cout << "Enter the % of unused shops: ";
 		n = correctNumber(0, 100);
-		idcs = parametr_cs(cs_group, checkUnworking, n);
+		idcs = findCSByParametr(cs_group, testUnworking, n);
 	}
 	return idcs;
 }
 //добавление трубы
 void addPipe(unordered_map<int, pipe>& pipe_group) {
-	idpipe.insert(pipe::max_indexp);
 	pipe p;
 	cin >> p;
 	pipe_group.insert({ p.getIdPipe(),p });
 }
 //добавление КС
 void addCS(unordered_map<int, CS>& cs_group) {
-	idcs.insert(pipe::max_indexp);
 	CS cs;
 	cin >> cs;
 	cs_group.insert({ cs.getIdCs(),cs });
@@ -137,7 +126,7 @@ void editPipes(unordered_map<int,pipe>& pipe_group) {
 			for (auto& pipe : pipe_group) {
 				cout << pipe.second << endl;
 			}
-			cout << "Choose id of pipe to edit: " << endl;
+			cout << "Choose id of pipe to edit: ";
 			id = correctNumber(0, (int)pipe_group.size());
 			if (pipe_group.find(id) != pipe_group.end()) {
 				pipe_group[id].editPipe();
@@ -154,7 +143,7 @@ void editPipes(unordered_map<int,pipe>& pipe_group) {
 			if (x == 1) {
 				auto idp=searchPipe(pipe_group);
 				if (idp.size() != 0) {
-					cout << "Enter a new status of pipe: " << endl;
+					cout << "Enter a new status of pipe: ";
 					n = correctNumber(0, 1);
 					for (auto& i : idp)
 						pipe_group[i].status = n; 
@@ -171,7 +160,7 @@ void editPipes(unordered_map<int,pipe>& pipe_group) {
 				for (auto& pipe : pipe_group) {
 					cout << pipe.second << endl;
 				}
-				cout << "Enter the number of id of pipes you want to edit: " << endl;
+				cout << "Enter the number of id of pipes you want to edit: ";
 				n = correctNumber(1, (int)pipe_group.size());
 				cout << "Enter id of pipes: " << endl;
 				for (int i = 0; ids.size() < n; i++) {
@@ -262,7 +251,7 @@ void editCSs(unordered_map<int, CS>& cs_group) {
 			for (auto& CS : cs_group) {
 				cout << CS.second << endl;
 			}
-			cout << "Choose CS to edit: " << endl;
+			cout << "Enter ID of CS to edit: ";
 			id = correctNumber(0, (int)cs_group.size());
 			if (cs_group.find(id) != cs_group.end()) {
 				cs_group[id].editCS();
@@ -277,6 +266,10 @@ void editCSs(unordered_map<int, CS>& cs_group) {
 			cout << "Choose CS by 1.filter 2.id" << endl;
 			x = correctNumber(1, 2);
 			if (x == 1) {
+				cout << "Your CS: " << endl;
+				for (auto& CS : cs_group) {
+					cout << CS.second << endl;
+				}
 				auto idp = searchCS(cs_group);
 				if (idp.size() != 0) {
 					for (auto& i : idp)
@@ -293,9 +286,9 @@ void editCSs(unordered_map<int, CS>& cs_group) {
 				for (auto& CS : cs_group) {
 					cout << CS.second << endl;
 				}
-				cout << "Enter the number of CSs you want to edit: " << endl;
+				cout << "Enter the number of CSs you want to edit: ";
 				n = correctNumber(1, (int)cs_group.size());
-				cout << "Enter id of CSs: " << endl;
+				cout << "Enter id of CS: ";
 				for (int i = 0; idk.size() < n; i++) {
 					cin >> y;
 					if (cs_group.find(y) != cs_group.end()) {
@@ -489,21 +482,19 @@ int main() {
 		}
 		// поиск трубы
 		case 8: {
-			//if (pipe_group.size() != 0) {
-				//auto p = searchPipe(pipe_group);
-				//if (p.size() != 0) {
-					//for (auto& i : p)
-						//cout << pipe_group[i] << endl;
-				//}
-				//else {
-					//cout << "You don't have such pipe!" << endl;
-				//}
-			//}
-			//else {
-				//cout << "You don't have a pipe!" << endl;
-			//}
-			selectPipe(pipe_group);
-			break;
+			if (pipe_group.size() != 0) {
+				auto p = searchPipe(pipe_group);
+				if (p.size() != 0) {
+					for (auto& i : p)
+						cout << pipe_group[i] << endl;
+				}
+				else {
+					cout << "You don't have such pipe!" << endl;
+				}
+			}
+			else {
+				cout << "You don't have a pipe!" << endl;
+			}
 		}
 		// поиск КСки
 		case 9: {

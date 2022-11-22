@@ -29,7 +29,7 @@ template <typename T>
 using filter_cs = bool (*) (CS& cs, T par);
 
 template <typename T>
-vector <int> parametr_p(unordered_map <int, pipe>& pipe_group, filter_pipe<T> f, T par)
+vector <int> findPipeByParametr(unordered_map <int, pipe>& pipe_group, filter_pipe<T> f, T par)
 {
 	vector <int> id;
 	for (auto& pipe : pipe_group) {
@@ -40,7 +40,7 @@ vector <int> parametr_p(unordered_map <int, pipe>& pipe_group, filter_pipe<T> f,
 }
 
 template <typename T>
-vector <int> parametr_cs(unordered_map <int, CS>& cs_group, filter_cs<T> f, T par)
+vector <int> findCSByParametr(unordered_map <int, CS>& cs_group, filter_cs<T> f, T par)
 {
 	vector <int> id;
 	for (auto& CS : cs_group) 
@@ -50,3 +50,4 @@ vector <int> parametr_cs(unordered_map <int, CS>& cs_group, filter_cs<T> f, T pa
 	}
 	return id;
 }
+
