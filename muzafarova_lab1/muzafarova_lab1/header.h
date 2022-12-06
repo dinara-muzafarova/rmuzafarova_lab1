@@ -34,7 +34,7 @@ vector <int> findPipeByParametr(unordered_map <int, pipe>& pipe_group, filter_pi
 	vector <int> id;
 	for (auto& pipe : pipe_group) {
 		if (f(pipe.second, par))
-			id.push_back(pipe.second.getIdPipe());
+			id.push_back(pipe.second.IdPipe());
 	}
 	return id;
 }
@@ -46,7 +46,7 @@ vector <int> findCSByParametr(unordered_map <int, CS>& cs_group, filter_cs<T> f,
 	for (auto& CS : cs_group) 
 	{
 		if (f(CS.second, par))
-			id.push_back(CS.second.getIdCs());
+			id.push_back(CS.second.IdCs());
 	}
 	return id;
 }

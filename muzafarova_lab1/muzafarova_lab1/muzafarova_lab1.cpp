@@ -214,17 +214,15 @@ void editPipes(unordered_map<int,pipe>& pipe_group) {
 					for (auto& pipe : pipe_group) {
 						cout << pipe.second << endl;
 					}
-					cout << "Enter the number of pipe you want to delete: ";
-					int n = correctNumber(1, (int)pipe_group.size());
-					cout << "Enter id of pipes: ";
-					while (ids.size() < n) {
-						int s = correctNumber(0, pipe::max_indexp - 1);
+					cout << "Input the id of pipes you want to delete: ";
+					int s = correctNumber(0, pipe::max_indexp - 1);
+					while (s != 0) {
 						if (pipe_group.find(s) != pipe_group.end()) {
 							ids.insert(s);
 						}
-						else {
-							cout << "You don't have such pipe!";
-						}
+						else 
+							cout << "You don't have such pipe!" << endl;
+						s = correctNumber(0, pipe::max_indexp - 1);
 					}
 					for (auto& id : ids) {
 						pipe_group.erase(pipe_group.find(id));
@@ -340,18 +338,15 @@ void editCSs(unordered_map<int, CS>& cs_group) {
 					for (auto& CS : cs_group) {
 						cout << CS.second << endl;
 					}
-					cout << "Enter the number of CS you want to delete: ";
-					int n = correctNumber(1, (int)cs_group.size());
-					cout << "Enter id of CSs: ";
-					for(int i = 0; i < n; i++) {
-						int s = correctNumber(0, CS::max_indexcs);
+					cout << "Input the id of CS you want to delete: ";
+					int s = correctNumber(0, CS::max_indexcs-1);
+					while(s != 0) {
 						if (cs_group.find(s) !=cs_group.end()) {
 							ids.insert(s);
 						}
-						else {
-							i = i - 1;
-							cout << "You don't have such CS!";
-						}
+						else 
+							cout << "You don't have such CS!" << endl;
+						s = correctNumber(0, CS::max_indexcs - 1);
 					}
 					for (auto& i : ids) {
 						cs_group.erase(cs_group.find(i));
